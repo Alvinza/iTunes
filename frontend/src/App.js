@@ -20,7 +20,7 @@ function App() {
   // Fetch authentication token on component mount
   useEffect(() => {
     const fetchToken = async () => {
-      const { data } = await axios.post('http://localhost:5000/api/token');
+      const { data } = await axios.post('https://itunes-backend-1snu.onrender.com/api/token');
       setToken(data.token);
     };
     fetchToken();
@@ -34,7 +34,7 @@ function App() {
    */
   const handleSearch = async (term, media) => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/search', {
+      const { data } = await axios.get('https://itunes-backend-1snu.onrender.com/api/search', {
         params: { term, media },
         headers: { Authorization: token },
       });
