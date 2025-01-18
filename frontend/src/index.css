@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: #161616;
+}
+
+input {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.App {
+    margin-top: 2rem;
+}
+
+.search-bar {
+    margin-bottom: 2rem;
+}
+
+.select {
+    margin-right: 1rem;
+    border-radius: 5px;
+    padding: 10px;
+}
+
