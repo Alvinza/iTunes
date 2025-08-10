@@ -6,6 +6,7 @@ import axios from 'axios';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import Favourites from './components/Favourites';
+import NavBar from "./components/NavBar";
 
 /**
  * Main App Component
@@ -62,7 +63,7 @@ function App() {
 
   return (
     <div className="App container">
-      <h1>iTunes Search App</h1>
+      <NavBar />
       <SearchBar onSearch={handleSearch} />
       <Results results={results} onAddToFavourites={addToFavourites} />
       <Favourites favourites={favourites} onRemove={removeFromFavourites} />
