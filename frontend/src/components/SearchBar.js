@@ -5,6 +5,7 @@ import React, { useState } from "react";
 const SearchBar = ({ onSearch }) => {
   const [term, setTerm] = useState(""); // Search input value
   const [media, setMedia] = useState("all"); // Selected media type
+  const [loading, setLoading] = useState(false);
 
   // Handle form submit: prevent reload + call parent onSearch
   const handleSubmit = (e) => {
@@ -37,7 +38,7 @@ const SearchBar = ({ onSearch }) => {
 
       {/* Submit button */}
       <button className="btn btn-primary" type="submit">
-        Search
+        {loading ? "Loading.." : "Search"}
       </button>
     </form>
   );
