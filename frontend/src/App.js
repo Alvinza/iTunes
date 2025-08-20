@@ -1,73 +1,76 @@
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SearchBar from './components/SearchBar';
-import Results from './components/Results';
-import Favourites from './components/Favourites';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import SearchBar from "./components/SearchBar";
+import Results from "./components/Results";
+import Favorites from "./components/Favorites";
 
 /**
  * Main App Component
- * Manages application state and coordinates communication between components
+ * Handles global state for search results, favourites, and authentication
  */
 function App() {
-  // State management for search results, favourites and API token
-  const [results, setResults] = useState([]);
-  const [favourites, setFavourites] = useState([]);
-  const [token, setToken] = useState('');
+ 
+  const [results, setResults] = useState([]);       // Stores search results
+  const [favorites, setFavorites] = useState([]); // Stores favorite items
+  const [token, setToken] = useState("");           // Stores authentication token
 
-  // Fetch authentication token on component mount
+  // Fetch Authentication Token
   useEffect(() => {
     const fetchToken = async () => {
-      const { data } = await axios.post('https://itunes-backend-1snu.onrender.com/api/token');
+      const { data } = await axios.post(
+        "https://itunes-backend-1snu.onrender.com/api/token"
+      );
       setToken(data.token);
     };
     fetchToken();
   }, []);
 
-  /**
-   * Handles search functionality
-   * Makes API call to iTunes search endpoint with authentication
-   * @param {string} term - Search term
-   * @param {string} media - Media type filter
-   */
+  // -------------------- Handle Search --------------------
   const handleSearch = async (term, media) => {
+    // term = search keyword, media = type of content (music, movies, etc.)
     try {
-      const { data } = await axios.get('https://itunes-backend-1snu.onrender.com/api/search', {
-        params: { term, media },
-        headers: { Authorization: token },
-      });
-      setResults(data);
+      const { data } = await axios.get(
+        "https://itunes-backend-1snu.onrender.com/api/search",
+        {
+          params: { term, media },
+          headers: { Authorization: token },
+        }
+      );
+      setResults(data); // update results with API response
     } catch (error) {
       console.error("Error fetching data", error);
     }
   };
 
-  /**
-   * Adds an item to favourites list
-   * @param {Object} item - Item to add to favourites
-   */
-  const addToFavourites = (item) => {
-    setFavourites([...favourites, item]);
+  const addToFavorites = (item) => {
+    // add selected item to favourites
+    setFavorites([...favorites, item]);
   };
 
-  /**
-   * Removes an item from favourites list
-   * @param {Object} item - Item to remove from favourites
-   */
-  const removeFromFavourites = (item) => {
-    setFavourites(favourites.filter(fav => fav.trackId !== item.trackId));
+  const removeFromFavorites = (item) => {
+    // remove item from favourites by trackId
+    setFavorites(favorites.filter((fav) => fav.trackId !== item.trackId));
   };
 
   return (
-    <div className="App container">
-      <h1>iTunes Search App</h1>
+   <div className="App container">
+  <h1>iTunes Search App</h1>
+
+  <div className="row">
+    <div className="col-md-8">
       <SearchBar onSearch={handleSearch} />
-      <Results results={results} onAddToFavourites={addToFavourites} />
-      <Favourites favourites={favourites} onRemove={removeFromFavourites} />
     </div>
+    <div className="col-md-4">
+      <Favorites favorites={favorites} onRemove={removeFromFavorites} />
+    </div>
+  </div>
+
+  <Results results={results} onAddToFavorites={addToFavorites} />
+</div>
+
   );
 }
 

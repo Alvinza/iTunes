@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-/**
- * SearchBar Component
- * Renders a form with search input and media type selection
- * @param {Object} props
- * @param {Function} props.onSearch - Callback function to handle search
- */
+// SearchBar component: lets users enter a term and select media type to search
+// {Object} props props.onSearch - Callback function to handle search
 const SearchBar = ({ onSearch }) => {
-  // State for search term and media type
-  const [term, setTerm] = useState('');
-  const [media, setMedia] = useState('all');
+  const [term, setTerm] = useState(""); // Search input value
+  const [media, setMedia] = useState("all"); // Selected media type
 
-  /**
-   * Handles form submission
-   * Prevents default form behavior and calls onSearch with current term and media
-   * @param {Event} e - Form submission event
-   */
+  // Handle form submit: prevent reload + call parent onSearch
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(term, media);
@@ -23,20 +14,31 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <form onSubmit={handleSubmit} className="search-bar">
+      {/* Search text input */}
       <input
         type="text"
         placeholder="Search term"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
-        style={{marginRight: "1rem"}}
+        style={{ marginRight: "1rem" }}
       />
-      <select value={media} onChange={(e) => setMedia(e.target.value)} className='select'>
+
+      {/* Dropdown for media type */}
+      <select
+        value={media}
+        onChange={(e) => setMedia(e.target.value)}
+        className="select"
+      >
         <option value="all">All</option>
         <option value="music">Music</option>
         <option value="movie">Movies</option>
         <option value="podcast">Podcasts</option>
       </select>
-      <button className='btn btn-primary' type="submit">Search</button>
+
+      {/* Submit button */}
+      <button className="btn btn-primary" type="submit">
+        Search
+      </button>
     </form>
   );
 };

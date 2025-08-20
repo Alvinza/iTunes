@@ -1,13 +1,12 @@
 import React from 'react';
 
 /**
- * Results Component
  * Displays search results from iTunes API
- * @param {Object} props
- * @param {Array} props.results - Array of search results from iTunes
- * @param {Function} props.onAddToFavourites - Callback to add item to favourites
+ *  {Object} props
+ *  {Array} props.results - Array of search results from iTunes
+ * {Function} props.onAddToFavorites - Callback to add item to favorites
  */
-const Results = ({ results, onAddToFavourites }) => {
+const Results = ({ results, onAddToFavorites }) => {
   return (
     <div className="results">
       {results.map((item, index) => (
@@ -16,11 +15,11 @@ const Results = ({ results, onAddToFavourites }) => {
           <h3>{item.collectionName || item.trackName}</h3>
           <p>{item.artistName}</p>
           <button 
-            onClick={() => onAddToFavourites(item)} 
-            className='btn btn-success'
+            onClick={() => onAddToFavorites(item)} 
+            className='btn btn-outline-primary'
             style={{marginBottom: "1rem"}}
           >
-            Add to Favourites
+            Add to Favorites
           </button>
         </div>
       ))}
