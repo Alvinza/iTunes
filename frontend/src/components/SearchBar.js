@@ -8,9 +8,11 @@ const SearchBar = ({ onSearch }) => {
   const [loading, setLoading] = useState(false);
 
   // Handle form submit: prevent reload + call parent onSearch
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch(term, media);
+    setLoading(true);
+    await onSearch(term, media);
+    setLoading(false);
   };
 
   return (
